@@ -23,10 +23,15 @@
         <td>{{ jogo.genero }}</td>
         <td>{{ jogo.anoLancamento }}</td>
         <td><StatusBadgeComponent :status="jogo.disponivel"/></td>
-        <td>            
-          <button @click="excluirJogo(jogo.id)" class="btn btn-danger">
-          </button>
-          <RouterLink :to="`/jogos/${jogo.id}/editar`" class="btn btn-warning"></RouterLink>
+        <td>   
+          <div class="d-flex gap-2">
+            <button @click="excluirJogo(jogo.id)" class="btn btn-outline-danger btn-sm">
+              Excluir
+            </button>
+            <RouterLink :to="`/jogos/${jogo.id}/editar`" class="btn btn-outline-warning btn-sm">
+              Editar
+            </RouterLink>
+          </div>         
         </td>
       </tr>
   </tbody>

@@ -23,7 +23,7 @@ export async function postJogo(Jogo: Omit<Jogo, 'id'>) {
 }
 
 export async function putJogo(id: number | string, Jogo: Omit<Jogo, 'id'>) {
-    const response = await api.put(`/jogos/${id}/editar`, Jogo)
+    const response = await api.put(`/jogos/${id}`, Jogo)
     return response.data
 }
 

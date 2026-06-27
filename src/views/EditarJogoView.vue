@@ -38,7 +38,7 @@
 
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">Status de disponibilidade</label>
-          <select class="form-control" v-model="alterarJogo.anoLancamento">
+          <select class="form-control" v-model="alterarJogo.disponivel">
             <option value="" select disabled>Selecione o status</option>
             <option value="true">Disponível</option>
             <option value="false">Não disponível</option>

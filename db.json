@@ -5,8 +5,8 @@
       "titulo": "Halo Infinite",
       "plataforma": "Xbox Series X",
       "genero": "FPS",
-      "anoLancamento": 2021,
-      "disponivel": false
+      "anoLancamento": "202",
+      "disponivel": true
     },
     {
       "id": "3",
@@ -22,7 +22,7 @@
       "plataforma": "PC",
       "genero": "RPG/Souls-like",
       "anoLancamento": 2022,
-      "disponivel": false
+      "disponivel": true
     },
     {
       "titulo": "asdf",
