@@ -14,6 +14,42 @@
            Adicione também:
              - Um botão "Salvar alterações"
              - Um botão "Cancelar" que volta para /jogos -->
+
+      <form @submit.prevent="editarJogo">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Título</label>
+          <input class="form-control" type="text" v-model="alterarJogo.titulo">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Plataforma</label>
+            <input class="form-control" type="text" v-model="alterarJogo.plataforma">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Gênero</label>
+          <input class="form-control" type="text" v-model="alterarJogo.genero">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Ano de lançamento</label>
+          <input class="form-control" type="text" v-model="alterarJogo.anoLancamento">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Status de disponibilidade</label>
+          <select class="form-control" v-model="alterarJogo.anoLancamento">
+            <option value="" select disabled>Selecione o status</option>
+            <option value="true">Disponível</option>
+            <option value="false">Não disponível</option>
+          </select>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Salvar</button>
+          <RouterLink to="/jogos" class="btn btn-primary">Voltar</RouterLink> 
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -22,11 +58,32 @@
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
+import { Jogo } from '@/interfaces/Jogo'
+import { getJogoById, putJogo } from '@/service/api'
 // TODO 19 — Importe a interface Jogo do arquivo de tipos
 
 const router = useRouter()
 const route = useRoute()
 const API_URL = 'http://localhost:3000/jogos'
+
+const alterarJogo = ref({} as Jogo)
+const jogoId = route.params.id as string
+
+async function buscarJogoAltual(){
+  const jogoAtual: Jogo = await getJogoById(jogoId) 
+
+  alterarJogo.value = jogoAtual
+}
+
+async function editarJogo(){
+  alterarJogo.value.disponivel = String(alterarJogo.value.disponivel) === 'true';
+  const novoJogo = alterarJogo.value as Jogo
+  await putJogo(jogoId, novoJogo)
+
+  router.push(`/jogos`)
+}
+
+onMounted(buscarJogoAltual)
 
 // TODO 20 — Obtenha o ID do jogo a partir dos parâmetros da rota.
 //   Dica: use route.params.id

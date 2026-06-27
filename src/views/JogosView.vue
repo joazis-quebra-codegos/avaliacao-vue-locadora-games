@@ -2,8 +2,35 @@
   <div>
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2>Acervo de Jogos</h2>
-      <!-- TODO 6 — Adicione um botão/link que leva para a rota /jogos/novo -->
+      <RouterLink to="/jogos/novo" class="btn btn-primary">Novo jogo</RouterLink>
     </div>
+
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Titulo</th>
+        <th scope="col">Plataforma</th>
+        <th scope="col">Gênero</th>
+        <th scope="col">Ano de lançamento</th>
+        <th scope="col">Disponibilidade</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody v-for="jogo in jogos" :key="jogo.id">
+      <tr>
+        <td>{{ jogo.titulo }}</td>
+        <td>{{ jogo.plataforma }}</td>
+        <td>{{ jogo.genero }}</td>
+        <td>{{ jogo.anoLancamento }}</td>
+        <td><StatusBadgeComponent :status="jogo.disponivel"/></td>
+        <td>            
+          <button @click="excluirJogo(jogo.id)" class="btn btn-danger">
+          </button>
+          <RouterLink :to="`/jogos/${jogo.id}/editar`" class="btn btn-warning"></RouterLink>
+        </td>
+      </tr>
+  </tbody>
+</table>
 
     <!-- TODO 7 — Exiba uma tabela com os jogos buscados da API.
          A tabela deve ter as colunas:
@@ -29,9 +56,32 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { Jogo } from '@/interfaces/Jogo';
+import { deleteJogo, getJogos } from '@/service/api';
+import StatusBadgeComponent from '@/components/statusBadgeComponent.vue';
 // TODO 9 — Importe a interface Jogo do arquivo de tipos
 
 const API_URL = 'http://localhost:3000/jogos'
+
+const jogos = ref<Jogo[]>([])
+
+async function buscarJogos(){
+  const jogosRes: Jogo[] = await getJogos() 
+  const jogoLista = jogosRes as Jogo[]
+  jogos.value.push(...jogoLista)
+}
+
+async function excluirJogo(id: number | string) {
+  try {
+    await deleteJogo(id);
+    // Atualiza a tela instantaneamente
+    jogos.value = jogos.value.filter(jogo => jogo.id !== id);
+  } catch (erro) {
+    console.error(erro);
+  }
+}
+
+onMounted(buscarJogos)
 
 // TODO 10 — Crie a variável reativa "jogos" para armazenar a lista
 //   de jogos retornada pela API. Comece com uma lista vazia.

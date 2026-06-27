@@ -11,6 +11,12 @@
 // Dica: use a palavra-chave "export" para que essa interface
 // possa ser importada nos outros arquivos do projeto.
 
+
 export interface Jogo {
-  // Escreva os atributos aqui
+  id: number,
+  titulo: string,
+  plataforma: string,
+  genero: string,
+  anoLancamento: number,
+  disponivel: boolean
 }
