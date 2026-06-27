@@ -1,7 +1,6 @@
 <template>
   <NavbarComponent />
   
-  <!-- Contêiner principal da aplicação -->
   <main class="container py-4">
     <RouterView />
   </main>

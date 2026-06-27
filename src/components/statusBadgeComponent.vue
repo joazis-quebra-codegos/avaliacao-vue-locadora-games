@@ -11,7 +11,6 @@
 
 <script setup lang="ts">
 
-// TODO: Declare a prop 'status' do tipo string usando defineProps.
 const props = defineProps<{
     status: true | false
 }>()
